@@ -8,6 +8,7 @@ import { prototypeInterceptor, requestInterceptor, routeInterceptor } from './in
 import store from './store'
 // 自定义指令
 import * as directives from '@/directives'
+
 export function createApp() {
   const app = createSSRApp(App)
   app.use(store)
@@ -15,7 +16,6 @@ export function createApp() {
   app.use(requestInterceptor)
   app.use(prototypeInterceptor)
   app.use(VueQueryPlugin)
-
   Object.keys(directives).forEach((key) => {
     app.directive(key, (directives as { [key: string]: Directive })[key])
   })

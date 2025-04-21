@@ -24,7 +24,7 @@
             <view class="flex-row items-center">
               <text class="text-#333333 text-28rpx">{{ item.name }}</text>
               <text class="text-#333333 text-24rpx mx-10rpx">{{ item.phone }}</text>
-              <wd-tag plain bg-color="#FAA21E" color="#FAA21E" v-if="item.isDefault">默认</wd-tag>
+              <wd-tag plain bg-color="#FFD700" color="#FFD700" v-if="item.isDefault">默认</wd-tag>
             </view>
             <view class="text-#999999 text-22rpx mt-10rpx">{{ item.address }}</view>
           </view>
@@ -38,7 +38,7 @@
           <view class="flex items-center justify-between mt-15rpx">
             <view class="flex items-center">
               <wd-checkbox
-                checked-color="#FAA21E"
+                checked-color="#FFD700"
                 v-model="item.isDefault"
                 custom-label-class="text-22rpx! text-#999999!"
                 @change="changeDefault(item.id)"
@@ -61,7 +61,7 @@
           {{ isEdit ? '退出管理' : '管理' }}
         </wd-button>
         <wd-button
-          custom-class="flex-1 bg-#FAA21E!"
+          custom-class="flex-1 bg-#FFD700!"
           icon="add"
           @click="navigateTo('/setting-sub/address/list/edit')"
         >
@@ -145,6 +145,9 @@ const handleDelete = (id: number) => {
     .confirm({
       msg: '确定要删除该地址吗？',
       confirmButtonText: '删除',
+      confirmButtonProps: {
+        customClass: 'bg-#FFD700!',
+      },
     })
     .then(() => {
       console.log('点击了确定按钮')

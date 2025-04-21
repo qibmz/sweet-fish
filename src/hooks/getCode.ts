@@ -7,7 +7,7 @@ import { ref, computed, onUnmounted } from 'vue'
  * @param initialCountdown 初始倒计时秒数，默认为60秒
  * @returns 返回一个对象{loading, error, run, buttonText}，包含请求的加载状态、错误信息、手动触发请求的函数和按钮文字。
  */
-export function useCaptcha(phoneNumber: string, initialCountdown: number = 60) {
+export function useCaptcha(phoneNumber: number, initialCountdown: number = 60) {
   const loading = ref(false)
   const error = ref(false)
   const countdown = ref(initialCountdown)
@@ -34,11 +34,11 @@ export function useCaptcha(phoneNumber: string, initialCountdown: number = 60) {
     loading.value = true
     error.value = false
     try {
-      await getUserSendCode({
-        params: {
-          phone: phoneNumber,
-        },
-      })
+      // await getUserSendCode({
+      //   params: {
+      //     phone: phoneNumber,
+      //   },
+      // })
       countdown.value = initialCountdown
       startCountdown()
     } catch (err) {

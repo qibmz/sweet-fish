@@ -5,22 +5,30 @@
 
 interface NavigateToOptions {
   url: "/pages/index/index" |
+       "/pages/attachments/index" |
        "/pages/hotUpdate/index" |
+       "/pages/message/index" |
        "/pages/mine/index" |
-       "/pages/order/index" |
-       "/login-sub/test" |
+       "/login-sub/inputCode" |
        "/login-sub/login/index" |
        "/other-sub/topic/index" |
+       "/setting-sub/account/changePassword" |
+       "/setting-sub/account/index" |
+       "/setting-sub/account/realNameAuthentication" |
        "/setting-sub/setting/index" |
-       "/setting-sub/userInfo/index" |
+       "/setting-sub/setting/recommend" |
+       "/setting-sub/setting/userInfo" |
        "/setting-sub/address/list/edit" |
        "/setting-sub/address/list/index" |
-       "/setting-sub/address/manage/index";
+       "/setting-sub/address/manage/index" |
+       "/product-sub/addSales/index" |
+       "/product-sub/attention/index" |
+       "/product-sub/historyView/index";
 }
 interface RedirectToOptions extends NavigateToOptions {}
 
 interface SwitchTabOptions {
-  url: "/pages/index/index" | "/pages/mine/index" | "/pages/mine/index" | "/pages/mine/index"
+  url: "/pages/index/index" | "/pages/attachments/index" | "/pages/message/index" | "/pages/mine/index"
 }
 
 type ReLaunchOptions = NavigateToOptions | SwitchTabOptions;

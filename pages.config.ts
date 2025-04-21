@@ -37,7 +37,7 @@ export default defineUniPages({
       {
         iconPath: '/static/tabbar/example.png',
         selectedIconPath: '/static/tabbar/exampleHL.png',
-        pagePath: 'pages/mine/index',
+        pagePath: 'pages/attachments/index',
         text: '附近',
         icon: 'swap',
         iconType: 'wot',
@@ -45,7 +45,7 @@ export default defineUniPages({
       {
         iconPath: '/static/tabbar/example.png',
         selectedIconPath: '/static/tabbar/exampleHL.png',
-        pagePath: 'pages/mine/index',
+        pagePath: 'pages/message/index',
         text: '消息',
         icon: 'user-talk',
         iconType: 'wot',

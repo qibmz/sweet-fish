@@ -238,59 +238,15 @@ export const imgStrToArr = (imgStr: string) => {
     return useSystemStore().getPicUrl(img)
   })
 }
-// 定义 productValue 的类型接口
-interface ProductValueItem {
-  id: number
-  image: string
-  price: number
-  stock: number
-}
-
-/** 转换sku数据 */
-export const getSku = (
-  goods: {
-    _id: number | undefined
-    name: string | undefined
-    goods_thumb: string
-    spec_list: any[]
-    sku_list: {
-      _id: any
-      goods_name: string
-      image: string
-      price: any
-      sku_name_arr: string[]
-      stock: any
-    }[]
-  },
-  resData: ProductDetailResponse,
-) => {
-  const getPicUrl = useSystemStore().getPicUrl
-  const productValue = resData.productValue ?? {}
-  const productAttr = resData.productAttr ?? []
-  goods._id = resData.productInfo?.id
-  goods.name = resData.productInfo?.storeName
-  goods.goods_thumb = getPicUrl(resData.productInfo?.image)
-  const skuNameArr = Object.keys(productValue)
-  const specLen = productAttr?.length
-  goods.spec_list = Array(specLen).fill(null)
-  goods.sku_list = skuNameArr.map((item, i) => {
-    if (i < specLen) {
-      const attr = productAttr[i]
-      goods.spec_list[i] = {
-        name: attr.attrName,
-        list: attr.attrValues?.split(',').map((item) => {
-          return { name: item }
-        }),
-      }
-    }
-    const temp = productValue[item] as ProductValueItem
-    return {
-      _id: temp.id,
-      goods_name: '',
-      image: getPicUrl(temp.image),
-      price: temp.price,
-      sku_name_arr: item.split(','),
-      stock: temp.stock,
-    }
-  })
+/**
+ * 截取字符串并在末尾添加省略号
+ * @param str - 输入字符串
+ * @param length - 截取的长度，默认为3
+ * @returns 截取后的字符串，如果原字符串长度大于指定长度则末尾添加省略号
+ */
+export const truncateString = (str: string, length: number = 3): string => {
+  if (str.length <= length) {
+    return str
+  }
+  return str.slice(0, length) + '...'
 }

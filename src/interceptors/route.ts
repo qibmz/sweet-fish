@@ -6,13 +6,15 @@
  */
 import { useUserStore } from '@/store'
 import { needLoginPages as _needLoginPages, getNeedLoginPages } from '@/utils'
+import { redirectTo, switchTab } from '@/utils/navigator'
+import { isH5 } from '@/utils/platform'
 
 // TODO Check
 const loginRoute = '/pages/login/index'
 
 const isLogined = () => {
   const userStore = useUserStore()
-  return userStore.isLogined
+  return userStore.isLogin
 }
 
 const isDev = import.meta.env.DEV
@@ -21,6 +23,14 @@ const isDev = import.meta.env.DEV
 const navigateToInterceptor = {
   // 注意，这里的url是 '/' 开头的，如 '/pages/index/index'，跟 'pages.json' 里面的 path 不同
   invoke({ url }: { url: string }) {
+    // if (isH5) {
+    //   const routeListStr = sessionStorage.getItem('routeList')
+    //   const routeList = routeListStr
+    //     ? (JSON.parse(routeListStr) as string[])
+    //     : ['/pages/index/index']
+    //   routeList.push(url)
+    //   sessionStorage.setItem('routeList', JSON.stringify(routeList)) // 保存更新后的路由列表
+    // }
     // console.log(url) // /pages/route-interceptor/index?name=feige&age=30
     const path = url.split('?')[0]
     let needLoginPages: string[] = []
@@ -43,12 +53,25 @@ const navigateToInterceptor = {
     return false
   },
 }
+const navigateBackInterceptor = {
+  invoke() {
+    if (isH5) {
+      const pages = getCurrentPages()
+      if (pages.length === 1) {
+        switchTab('/pages/index/index')
+        return false
+      }
+    }
 
+    return true
+  },
+}
 export const routeInterceptor = {
   install() {
     uni.addInterceptor('navigateTo', navigateToInterceptor)
     uni.addInterceptor('reLaunch', navigateToInterceptor)
     uni.addInterceptor('redirectTo', navigateToInterceptor)
     uni.addInterceptor('switchTab', navigateToInterceptor)
+    uni.addInterceptor('navigateBack', navigateBackInterceptor)
   },
 }

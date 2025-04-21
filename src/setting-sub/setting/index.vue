@@ -26,20 +26,25 @@
 </template>
 
 <script lang="ts" setup>
-import { navigateTo, UrlOptions } from '@/utils/navigator'
+import { useUserStore } from '@/store'
+import { navigateTo, redirectTo, UrlOptions } from '@/utils/navigator'
 import { useMessage } from 'wot-design-uni/components/wd-message-box'
-
+const userStore = useUserStore()
 const cellList = [
   {
     title: '个人',
     list: [
       {
         title: '个人资料',
-        to: '/setting-sub/userInfo/index',
+        to: '/setting-sub/setting/userInfo',
       },
       {
         title: '地址管理',
         to: '/setting-sub/address/manage/index',
+      },
+      {
+        title: '账号与安全',
+        to: '/setting-sub/account/index',
       },
     ],
   },
@@ -56,7 +61,7 @@ const cellList = [
       },
       {
         title: '个性化选项',
-        to: '/setting-sub/address/manage/index',
+        to: '/setting-sub/setting/recommend',
       },
     ],
   },
@@ -76,9 +81,13 @@ const handLogout = () => {
   message
     .confirm({
       msg: '确定要退出登录吗？',
+      confirmButtonProps: {
+        customClass: 'bg-#FFD700!',
+      },
     })
     .then(() => {
-      console.log('点击了确定按钮')
+      userStore.clearUserInfo()
+      redirectTo('/login-sub/login/index')
     })
 }
 </script>

@@ -6,7 +6,7 @@
     safeAreaInsetBottom
     placeholder
     @change="selectTabBar"
-    active-color="#fbc02d"
+    active-color="#FFD700"
   >
     <block v-for="(item, idx) in tabbarList" :key="item.path">
       <wd-tabbar-item
@@ -41,7 +41,11 @@ import { tabBar } from '@/pages.json'
 import { tabbarStore } from './tabbar'
 /** tabbarList 里面的 path 从 pages.config.ts 得到 */
 const tabbarList = tabBar.list.map((item) => ({ ...item, path: `/${item.pagePath}` }))
-
+onShow(() => {
+  const pages = getCurrentPages()
+  const index = tabbarList.findIndex((item) => pages[pages.length - 1].route === item.pagePath)
+  if (index !== -1) tabbarStore.setCurIdx(index)
+})
 function selectTabBar({ value: index }: { value: number }) {
   const url = tabbarList[index].path
   tabbarStore.setCurIdx(index)

@@ -3,7 +3,7 @@
   layout: 'default',
   style: {
     navigationBarTitleText: '编辑资料',
-    navigationBarBackgroundColor: '#f5f5f5',
+    navigationBarBackgroundColor: '#fff',
   },
 }
 </route>
@@ -12,7 +12,7 @@
   <view class="pt-20rpx mx-20rpx">
     <wd-cell-group border>
       <wd-cell title="昵称" value="内容" is-link clickable center />
-      <wd-cell title="头像" is-link clickable center>
+      <wd-cell title="头像" is-link clickable center @click="handUpload">
         <template #default>
           <wd-img
             width="90rpx"
@@ -25,6 +25,7 @@
       <wd-cell title="简介" value="内容" is-link clickable center @click="popupShow = true" />
       <wd-picker :columns="columns" label="性别选择" align-right />
     </wd-cell-group>
+    <wd-img-cropper v-model="show" :img-src="src" @confirm="handleConfirm"></wd-img-cropper>
   </view>
 </template>
 
@@ -40,6 +41,21 @@ const columns = [
   },
 ]
 const popupShow = ref(false)
+const src = ref('')
+const show = ref(false)
+const handUpload = () => {
+  uni.chooseImage({
+    count: 1,
+    success: (res) => {
+      const tempFilePaths = res.tempFilePaths[0]
+      src.value = tempFilePaths
+      show.value = true
+    },
+  })
+}
+function handleConfirm(event: { tempFilePath: string }) {
+  const { tempFilePath } = event
+}
 </script>
 <style>
 page {

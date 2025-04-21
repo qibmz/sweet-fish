@@ -12,14 +12,21 @@
   <view class="header-bg"></view>
 
   <view class="mx-30rpx relative">
-    <view class="absolute z-3 h-660rpx right-0 left-0 center">
-      <wd-button type="info" custom-class="w-300rpx  " plain>登录/注册</wd-button>
+    <view class="absolute z-3 h-660rpx right-0 left-0 center" v-if="userStore.isLogin">
+      <wd-button
+        type="info"
+        custom-class="w-300rpx  "
+        plain
+        @click="navigateTo('/login-sub/login/index')"
+      >
+        登录/注册
+      </wd-button>
     </view>
     <!-- 顶部卡片 -->
     <view
       class="bg-white rounded-30rpx p-30rpx mt--150rpx"
       :style="{
-        filter: 'blur(3px)',
+        filter: userStore.isLogin ? 'blur(3px)' : '',
       }"
     >
       <view class="flex items-center justify-between">
@@ -54,7 +61,12 @@
         </wd-grid-item>
         <wd-grid-item text="我的关注" use-icon-slot>
           <template #icon>
-            <wd-text text="0" color="black" size="42rpx"></wd-text>
+            <wd-text
+              text="0"
+              color="black"
+              size="42rpx"
+              @click="navigateTo('/product-sub/attention/index')"
+            ></wd-text>
           </template>
         </wd-grid-item>
         <wd-grid-item text="我的动态" use-icon-slot>
@@ -62,7 +74,11 @@
             <wd-text text="0" color="black" size="42rpx"></wd-text>
           </template>
         </wd-grid-item>
-        <wd-grid-item text="历史浏览" use-icon-slot>
+        <wd-grid-item
+          text="历史浏览"
+          use-icon-slot
+          @click="navigateTo('/product-sub/historyView/index')"
+        >
           <template #icon>
             <wd-text text="0" color="black" size="42rpx"></wd-text>
           </template>
@@ -73,11 +89,11 @@
     <view
       class="bg-white rounded-30rpx mt-30rpx p-30rpx"
       :style="{
-        filter: 'blur(3px)',
+        filter: userStore.isLogin ? 'blur(3px)' : '',
       }"
     >
       <view class="flex items-center">
-        <view class="bg-#ffe344 w-3px mr-10rpx h-30rpx"></view>
+        <view class="bg-#FFD700 w-3px mr-10rpx h-30rpx"></view>
         <wd-text text="我的交易"></wd-text>
       </view>
       <wd-grid clickable custom-class="mt-10rpx">
@@ -116,7 +132,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserStore } from '@/store'
 import { navigateTo } from '@/utils/navigator'
+const userStore = useUserStore()
 </script>
 <style>
 page {
